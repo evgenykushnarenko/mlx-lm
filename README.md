@@ -92,7 +92,8 @@
 │   └── schemas/
 ├── scripts/
 │   ├── bootstrap-venv.sh
-│   └── chat-default-model.sh
+│   ├── chat-default-model.sh
+│   └── server-default-model.sh
 ├── tests/
 └── var/
 ```
@@ -129,10 +130,36 @@ source .venv/bin/activate
 ./scripts/chat-default-model.sh
 ```
 
+Для первого теста это удобно, но нужно учитывать, что `mlx_lm chat` по умолчанию склонен быстро упираться в лимит генерации на reasoning-моделях. Поэтому локальный wrapper в этом репозитории поднимает дефолтный `MAX_TOKENS` до `2048`.
+
 При необходимости можно переопределить модель через переменную окружения:
 
 ```bash
 MODEL_REPO=mlx-community/Qwen3.5-27B-Claude-4.6-Opus-Distilled-MLX-4bit ./scripts/chat-default-model.sh
+```
+
+Если нужен более чистый режим без вывода служебного reasoning-блока в ответ пользователю, предпочтительный путь - поднять HTTP server:
+
+```bash
+./scripts/server-default-model.sh
+```
+
+После этого можно ходить в локальный API на `http://127.0.0.1:8080/v1/chat/completions`. В wrapper по умолчанию выставлены:
+
+- `MAX_TOKENS=2048`;
+- `CHAT_TEMPLATE_ARGS='{"enable_thinking":false}'`.
+
+Пример запроса:
+
+```bash
+curl http://127.0.0.1:8080/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "model": "mlx-community/Qwen3.5-27B-Claude-4.6-Opus-Distilled-MLX-4bit",
+    "messages": [
+      {"role": "user", "content": "Как установить Tailscale в Debian?"}
+    ]
+  }'
 ```
 
 Если нужно вручную создать окружение без скрипта, эквивалентный минимальный путь такой:
@@ -142,6 +169,15 @@ python3.12 -m venv .venv
 ./.venv/bin/python -m pip install --upgrade pip setuptools wheel
 ./.venv/bin/pip install -e ".[dev]"
 ```
+
+## Наблюдаемое поведение reasoning-модели
+
+Для текущей модели есть два практически важных нюанса:
+
+- если запускать её через `mlx_lm chat`, служебное reasoning-содержимое может выходить прямо в терминал как `<think> ... </think>`;
+- если лимит генерации маленький, ответ может оборваться на середине строки просто по `finish_reason=length`.
+
+Поэтому для ручной терминальной проверки лучше явно держать большой `MAX_TOKENS`, а для интеграционного режима и будущего API использовать server-режим.
 
 ## Черновой API-контур
 
