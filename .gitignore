@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Env and local config
+.env
+.env.*
+
+# Editors
+.idea/
+.vscode/
+
+# Project runtime
+var/
+logs/
+tmp/
+cache/
+artifacts/
+models/
