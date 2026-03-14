@@ -1,5 +1,13 @@
 # mlx-lm API для macOS
 
+[![repo](https://s.evgn.ru/badge/repo-mlx--lm-2ea44f)](https://git.evgn.ru/evgeny/mlx-lm)
+![kind](https://s.evgn.ru/badge/kind-ai-0a7ea4)
+![compose](https://s.evgn.ru/badge/compose-no-1f6feb)
+![agents](https://s.evgn.ru/badge/agents-yes-ff9800)
+![runtime](https://s.evgn.ru/badge/runtime-python%203.12%20%2B%20MLX-6f42c1)
+![model](https://s.evgn.ru/badge/model-Qwen3.5%2027B-4caf50)
+![managed_by](https://s.evgn.ru/badge/managed%20by-Git-4caf50)
+
 Закрытый репозиторий для сервиса, который запускает `mlx-lm` на этом Mac и предоставляет единый HTTP API для работы с разными MLX-моделями.
 
 Базовая модель проекта на текущем этапе: `mlx-community/Qwen3.5-27B-Claude-4.6-Opus-Distilled-MLX-4bit`. Рабочая среда проекта стандартизирована на локальный `virtualenv` в каталоге `.venv`.
