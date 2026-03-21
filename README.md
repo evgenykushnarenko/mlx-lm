@@ -1,7 +1,6 @@
 ---
-include_toc: side
-lang: ru
-gitea: table
+include_toc: true
+gitea: none
 ---
 
 # mlx-lm API для macOS
