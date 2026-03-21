@@ -1,3 +1,9 @@
+---
+include_toc: side
+lang: ru
+gitea: table
+---
+
 # mlx-lm API для macOS
 
 [![repo](https://s.evgn.ru/badge/repo-mlx--lm-2ea44f)](https://git.evgn.ru/evgeny/mlx-lm)
